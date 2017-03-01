@@ -155,3 +155,47 @@ The two other payloads are due to protocol stack errors in the ControlLogix. Thi
 
 - Crash the PLC CPU
 - Crash the Ethernet Controller
+
+## Schneider Electric Modicon PLCs
+### Background
+The Schneider Electric Modicon Quantum is a versatile PLC used in a wide variety of sectors including manufacturing, water/wastewater, oil and gas, chemical and more. It has a modular architecture so the size and cost can vary a great deal. The very basic Quantum pictured at the left cost $11,000 including the Unity software.
+
+The Modicon Quantum Ethernet card is an embedded system running vxWorks 5.4 on a PowerPC processor (MPC870). The PLCs CPU module sports an x86 processor (the device tested in Basecamp had a 80486). Reid Wightman was the lead Project Basecamp researcher on this PLC, and he also developed the Metasploit Modules.
+
+### Metasploit Modules
+The Modicon Metasploit Modules are in the Metasploit Framework.
+#### [modicon_command](https://github.com/rapid7/metasploit-framework/blob/master/modules/auxiliary/admin/scada/modicon_command.rb) – Schneider Modicon Remote Start/Stop Command
+
+The Schneider Modicon with Unity series of PLCs use Modbus function code 90 (0x5a) to perform administrative commands without authentication.
+
+This module allows a remote user to change the state of the PLC between STOP and RUN. STOP will stop the CPU and will stop the PLC from monitoring and controlling the process. The CPU can be restarted with the RUN command.
+
+#### [modicon_password_recovery](https://github.com/rapid7/metasploit-framework/blob/master/modules/auxiliary/admin/scada/modicon_password_recovery.rb) – Schneider Modicon Quantum Password Recovery
+
+This Metasploit module retrieves the user-definable login names and passwords to a Schneider Modicon Quantum PLC and stores them in the Metasploit database. It uses a hard coded backdoor account to retrieve the account information via FTP (see ‘Backdoors’ below for a list of possible account names and passwords). Most account information is stored in plaintext.
+
+Three types of credentials are currently retrieved by the modicon_password_recovery module: one is a username and password for the Modicon webserver login, and a second is just a password, which allows control operations to be performed via the web interface (called the ‘Write password’).
+
+The third is a user-definable ftp account, the password of which is protected by the easily-cracked vxWorks loginDefaultEncrypt() hashing function. Recovering this password can be accomplished with the Metasploit framework’s vxworks password cracking tools.  Note that the tool may give a ‘plaintext’ version of the password with non-ASCII characters.  This is fine — these passwords may be used to log in to the device (although they won’t be typeable on a keyboard and will have to be used programmatically).
+
+#### [modicon_stux_transfer](https://github.com/rapid7/metasploit-framework/blob/master/modules/auxiliary/admin/scada/modicon_stux_transfer.rb) – Schneider Modicon Ladder Logic Upload/Download
+
+The Schneider Modicon with Unity series of PLCs use Modbus function code 90 (0x5a) to send and receive ladder logic. The protocol is unauthenticated, and allows a rogue host to retrieve the existing logic and to upload new logic.
+
+Two modes are supported: “SEND” and “RECV,” which behave as one might expect — use ‘set mode ACTIONAME’ to use either mode of operation.
+
+In either mode, FILENAME must be set to a valid path to an existing  file (for SENDing) or a new file (for RECVing), and the directory must already exist. The default, ‘modicon_ladder.apx’ is a blank ladder logic file which can be used for testing. It will overwrite existing ladder logic on the PLC.
+
+This is the same PLC attack methodology as Stuxnet, hence stux in the module name. An attacker would need to gain access to PLC ladder logic, which is possible with the RECV mode in this module. The attacker would then determine how they want to change the process and code the corresponding ladder logic. Then the attacker would upload his rogue ladder logic using the SEND mode in this module.
+
+### Fingerprinting
+The Quantum series may be found on search engines such as Shodan and ERIPP using the Server: identifier “Schneider-WEB”.
+
+### Backdoors
+The Quantum also contains a large number of backdoor accounts.  For example following accounts may be used to log in to the Ethernet card via telnet and ftp:
+
+ftpuser/password
+
+qbf77101/hexakisoctahedron
+
+When demonstrating the modicon_password_recovery metasploit module, it may be necessary to try several of these accounts.  The exact backdoor account names and passwords vary between the different Ethernet module order numbers.
