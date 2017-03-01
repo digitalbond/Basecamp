@@ -8,7 +8,7 @@ The goal of Project Basecamp is to make the risk of these fragile and insecure d
 The PLC / RTU that are part of this project are:
 - [3S CoDeSys](http://github.com/digitalbond/Basecamp#3s-codesys)
 - [GE D20](http://github.com/digitalbond/Basecamp#ge-d20-rtu)
-- [Koyo / DirectLOGIC](http://github.com/digitalbond/Basecamp#koyo-/-directlogic)
+- [Koyo / DirectLOGIC](http://github.com/digitalbond/Basecamp#koyo-directlogic)
 - [Rockwell Automation ControlLogix](http://github.com/digitalbond/Basecamp#rockwell-automation-controllogix)
 - [Schneider Electric Modicon](http://github.com/digitalbond/Basecamp#schneider-electric-modicon)
 
@@ -122,7 +122,7 @@ This is the same capability provided in the d20tftpbd Metasploit module.
 
 [ged20telnet-fp.py](https://github.com/digitalbond/Basecamp/blob/master/ged20telnet-fp.py) – This is a generic telnet service fingerprinting tool, which may be used against any controller which supports the telnet protocol.  It actively tries all telnet options against the remote host, to determine what options are supported.  This may crash some controllers, so use it with care.
 
-##Koyo / DirectLOGIC
+##Koyo DirectLOGIC
 ### Background
 The Koyo / DirectLOGIC product line is a much lower cost PLC as compared to the GE, Rockwell Automation and Schneider Quantum products in Project Basecamp. It is less likely to be seen in the critical infrastructure SCADA and DCS, but it is widely used in smaller plants and systems in a variety of industry sectors
 
