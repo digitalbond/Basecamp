@@ -132,3 +132,26 @@ With the recovered password an attacker can download ladder logic to learn about
 
 ### Fingerprinting Tools
 The Koyo is difficult to fingerprint due to its limited services. The web server provides no fingerprintable data (no Server: identifier). The Modbus protocol supports no odd function codes. The device may be located on active search engines such as ERIPP by searching for information contained in its web pages.
+
+## Rockwell Automation ControlLogix
+### Background
+The Rockwell Automation / Allen-Bradley ControlLogix is a full featured PLC used in a variety of different industry sectors. It is most common in the manufacturing sector, but it is also used in many other industries for ad hoc processes. For example in power plants it is used not in the main DCS but is often seen in balance of plant systems.
+
+The ControlLogix has separate CPU and Ethernet modules.  Architecturally, the system appears similar to the Schneider Modicon Quantum.  The Ethernet module offers a far smaller attack surface than the Schneider device.  Some effort appears to have gone into securing the device from the vendor, but protocol issues were uncovered.
+
+This device was tested by volunteer independent researcher Rubén Santamarta.
+
+### Metasploit Module
+[ethernetip-multi.rb](https://github.com/digitalbond/Basecamp/blob/master/ethernetip-multi.rb) – This Metasploit module has four possible payloads. The first two payloads highlight the EtherNet/IP protocol “insecure by design” issue.
+
+- Stop CPU – just like it sounds, this will take the ControlLogix out of service
+- Reboot Ethernet Controller – a temporary outage of the ControlLogix Ethernet interface
+
+There are many more request commands in the EtherNet/IP protocol that cause availability and integrity issues with the ControlLogix PLC. None of these commands are authenticated. This problem and attack will be effective on any EtherNet/IP device including other systems manufactured by Rockwell Automation, Schneider, Wago, and others.
+
+The ODVA is responsible for the EtherNet/IP protocol and shows 300 vendors using the protocol. Unbelievably the ODVA has not even begun an effort to add basic security to the protocol. Vendors may need to look at tunnels or wrappers until ODVA starts taking integrity and availability seriously. Not all of the payloads will work for all devices, but approximately 300 vendors will be affected.
+
+The two other payloads are due to protocol stack errors in the ControlLogix. This will also affect any other equipment that uses the same protocol stack.
+
+- Crash the PLC CPU
+- Crash the Ethernet Controller
