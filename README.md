@@ -63,13 +63,9 @@ The commands available vary by PLC, so type “?” to get a list of options.
 
 The second tool is a file transfer tool which allows for reading and writing files on controllers with a filesystem.  Again, this tool bypasses the only protections that CoDeSys provides — vendor-specific checks that ensure we’re communicating with the right kind of PLC.
 
-![Test This](https://www.digitalbond.com/wp-content/uploads/2012/10/Codesys-shell-local.png)
-
-codesys-shell.py connecting to a Wago controller
+![codesys-shell.py connecting to a Wago controller](https://www.digitalbond.com/wp-content/uploads/2012/10/Codesys-shell-local.png)
 
 These tools come in the form of Python scripts.  The hastily-written code isn’t terribly legible (blame Reid) but works quite well on a wide variety of controllers.  They can easily be ported to be Metasploit modules, and could be made to run the Meterpreter shell on supported operating systems.
-
-The final tool is an Nmap NSE script that will detect if your PLC or controller is running a vulnerable version of the CoDeSys ladder logic runtime. It has both big endian and little endian probes, while the python scripts only support little endian implementations. So if the python scripts fail, try the nmap NSE script.
 
 ### The Source
 
@@ -77,5 +73,47 @@ The final tool is an Nmap NSE script that will detect if your PLC or controller 
 
 - [codesys-transfer.py](https://github.com/digitalbond/Basecamp/blob/master/codesys-transfer.py)
 
-codesys.nse
+## GE D20 RTU
+### Background
+The General Electric D20ME is a widely used in the electric sector, particularly in substations. It is an ancient device with a CPU chip from 1987, actually a similar chip that was in the Macintosh II line, and a PSOS operating system that was end of support in 1999. It even had an old fashioned UV EPROM. All this obsolete technology cost $15,000 for an entry level version with just a couple of cards. The good news is that GE has come out with a new, modern version of the D20 called the D20MX. 
+
+Our blunt advice – don’t deploy any new GE D20s and develop a plan to replace all of your GE D20s with new MX models or some competitive product as soon as practical.
+
+### Metasploit Modules
+
+All of the Metasploit modules are available in Rapid7’s Metasploit feed.
+
+#### d20tftpbd – General Electric D20ME Asynchronous Command Line
+
+This module automates a “feature” in the D20 that allows a user to send via TFTP a MONITOR:command.log file. The D20 will execute all of the commands in that file, and then return the results to the Monitor:response.log file.
+
+This is very unusual and what Reid calls asynchronous command line — and there is no authentication. An attacker could craft a set of attack commands in a file and TFTP it to one or more GE D20’s.
+
+The d20tftpbd module automates the process and the Metasploit users appears to have an interactive command line interface to the GE D20. Try typing the help command to see all the commands that can be run from this asynchronous command line interface.
+
+This is an experimental module available in Metasploit’s testing branch. The module works fine, but it is so unusual that Rapid7 is trying to figure out the best way to include it in the framework.
+
+#### d20pass – General Electric D20ME Credential Recovery
+
+This module retrieves and displays the account usernames and passwords from the GE D20 device configuration.  The credentials can be used to perform any action on the device, including changing ladder logic. The credentials are just part of the plaintext configuration file that is downloaded. An attacker would have complete information on the process and the ability to make any changes.
+
+#### d20_tftp_overflow – General Electric D20ME TFTP Server Buffer Overflow DoS
+
+The D20 has numerous buffer overruns in its TFTP server. This module exploits the TFTP Server transfer-mode overflow and results in a denial of service condition on the D20. If successful you will see “TFTP – DoS complete, the D20 should fault after a timeout.” A reboot of the D20 is required to recover.
+
+The filename also suffers from an overrun but seems unlikely to be exploitable.
+
+### Easy Scripts
+
+d20cmd.py – A python script that provides an interactive command-line to the D20’s tftp backdoor command line.  Please read the comments in the header — this requires a new’ish python tftp library to work correctly — the version of the tftp library for python included with most major linux distros (Backtrack, Ubuntu, etc) is too old to work correctly.
+
+This is the same capability provided in the d20tftpbd Metasploit module.
+
+### Buffer Overflow Tools
+
+d20tftpbo – This module crashes the D20 tftp service.  The operating system catches the exception, but the damage is done — all processes are stopped and the D20’s network stack is disabled.
+
+### Fingerprinting Tools
+
+telnet-fp.py – This is a generic telnet service fingerprinting tool, which may be used against any controller which supports the telnet protocol.  It actively tries all telnet options against the remote host, to determine what options are supported.  This may crash some controllers, so use it with care.
 
