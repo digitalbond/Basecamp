@@ -105,15 +105,15 @@ The filename also suffers from an overrun but seems unlikely to be exploitable.
 
 ### Easy Scripts
 
-d20cmd.py – A python script that provides an interactive command-line to the D20’s tftp backdoor command line.  Please read the comments in the header — this requires a new’ish python tftp library to work correctly — the version of the tftp library for python included with most major linux distros (Backtrack, Ubuntu, etc) is too old to work correctly.
+[ged20cmd.py](https://github.com/digitalbond/Basecamp/blob/master/ged20cmd.py) – A python script that provides an interactive command-line to the D20’s tftp backdoor command line.  Please read the comments in the header — this requires a new’ish python tftp library to work correctly — the version of the tftp library for python included with most major linux distros (Backtrack, Ubuntu, etc) is too old to work correctly.
 
 This is the same capability provided in the d20tftpbd Metasploit module.
 
 ### Buffer Overflow Tools
 
-d20tftpbo – This module crashes the D20 tftp service.  The operating system catches the exception, but the damage is done — all processes are stopped and the D20’s network stack is disabled.
+[ged20tftp.rb](https://github.com/digitalbond/Basecamp/blob/master/ged20tftp.rb) – This module crashes the D20 tftp service.  The operating system catches the exception, but the damage is done — all processes are stopped and the D20’s network stack is disabled.
 
 ### Fingerprinting Tools
 
-telnet-fp.py – This is a generic telnet service fingerprinting tool, which may be used against any controller which supports the telnet protocol.  It actively tries all telnet options against the remote host, to determine what options are supported.  This may crash some controllers, so use it with care.
+[ged20telnet-fp.py][https://github.com/digitalbond/Basecamp/blob/master/ged20telnet-fp.py) – This is a generic telnet service fingerprinting tool, which may be used against any controller which supports the telnet protocol.  It actively tries all telnet options against the remote host, to determine what options are supported.  This may crash some controllers, so use it with care.
 
