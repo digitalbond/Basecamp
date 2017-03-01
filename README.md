@@ -115,5 +115,20 @@ This is the same capability provided in the d20tftpbd Metasploit module.
 
 ### Fingerprinting Tools
 
-[ged20telnet-fp.py][https://github.com/digitalbond/Basecamp/blob/master/ged20telnet-fp.py) – This is a generic telnet service fingerprinting tool, which may be used against any controller which supports the telnet protocol.  It actively tries all telnet options against the remote host, to determine what options are supported.  This may crash some controllers, so use it with care.
+[ged20telnet-fp.py](https://github.com/digitalbond/Basecamp/blob/master/ged20telnet-fp.py) – This is a generic telnet service fingerprinting tool, which may be used against any controller which supports the telnet protocol.  It actively tries all telnet options against the remote host, to determine what options are supported.  This may crash some controllers, so use it with care.
 
+## Koyo / DirectLOGIC
+### Background
+The Koyo / DirectLOGIC product line is a much lower cost PLC as compared to the GE, Rockwell Automation and Schneider Quantum products in Project Basecamp. It is less likely to be seen in the critical infrastructure SCADA and DCS, but it is widely used in smaller plants and systems in a variety of industry sectors
+
+The Basecamp team focused on the ECOM Ethernet module as this is the most accessible interface for a cyber attack. The ECOM module is an attractive target for an adversary. In S4 2009 Digital Bond demonstrated how unauthenticated firmware could be uploaded to the device.
+
+In Project Basecamp, the anonymous researcher found ladder logic upload and download is only protected by a seven-digit passcode, that can be brute-forced.  The webserver allows configuration of the Ethernet module only, but lacks any authentication and has cross-site scripting issues as well as denial-of-service issues.  In particular, requesting invalid pages such http://koyodevice/foo.htm will result the in the webserver going offline for several minutes.
+
+### Metasploit Module
+[koyobrute.rb](https://github.com/digitalbond/Basecamp/blob/master/koyobrute.rb) – This Metasploit module will bruteforce a Koyo password.  It is likely that this will work against other devices from Automation Direct which support the DirectNet (aka HAP) protocol. 
+
+With the recovered password an attacker can download ladder logic to learn about the project, modify the ladder logic to affect the availability or integrity of the process, and upload rogue ladder logic.
+
+### Fingerprinting Tools
+The Koyo is difficult to fingerprint due to its limited services. The web server provides no fingerprintable data (no Server: identifier). The Modbus protocol supports no odd function codes. The device may be located on active search engines such as ERIPP by searching for information contained in its web pages.
