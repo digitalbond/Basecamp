@@ -73,9 +73,9 @@ The final tool is an Nmap NSE script that will detect if your PLC or controller 
 
 ### The Source
 
-codesys-shell.py
+- [codesys-shell.py](https://github.com/digitalbond/Basecamp/blob/master/codesys-shell.py)
 
-codesys-transfer.py
+- [codesys-transfer.py](https://github.com/digitalbond/Basecamp/blob/master/codesys-transfer.py)
 
 codesys.nse
 
