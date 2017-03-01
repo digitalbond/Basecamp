@@ -28,7 +28,7 @@ The commands available vary by PLC, so type "?" to get a list of options.
 
 The second tool is a file transfer tool which allows for reading and writing files on controllers with a filesystem.  Again, this tool bypasses the only protections that CoDeSys provides -- vendor-specific checks that ensure we're communicating with the right kind of PLC.
 
-
+(https://www.digitalbond.com/wp-content/uploads/2012/10/Codesys-shell-local.png)
 codesys-shell.py connecting to a Wago controller
 
 These tools come in the form of Python scripts.  The hastily-written code isn't terribly legible (blame Reid) but works quite well on a wide variety of controllers.  They can easily be ported to be Metasploit modules, and could be made to run the Meterpreter shell on supported operating systems.
