@@ -6,7 +6,11 @@ Project Basecamp is a research effort by Digital Bond and a team of volunteer re
 The goal of Project Basecamp is to make the risk of these fragile and insecure devices so apparent and easy to demonstrate that a decade of inaction will end. SCADA and DCS owner/operators will demand a secure and robust PLC, and this will drive vendors to finally provide a product worthy of being deployed in the critical infrastructure.
 
 The PLC / RTU that are part of this project are:
-- [3S CoDeSys](http://github.com/digitalbond/Basecamp#3S)
+- [3S CoDeSys](http://github.com/digitalbond/Basecamp#3s-codesys)
+- [GE D20](http://github.com/digitalbond/Basecamp#ge-d20-rtu)
+- [Koyo / DirectLOGIC](http://github.com/digitalbond/Basecamp#koyo-/-directlogic)
+- [Rockwell Automation ControlLogix](http://github.com/digitalbond/Basecamp#rockwell-automation-controllogix)
+- [Schneider Electric Modicon](http://github.com/digitalbond/Basecamp#schneider-electric-modicon)
 
 ## The Reason: A Firesheep Moment for PLC's
 
@@ -74,7 +78,7 @@ These tools come in the form of Python scripts.  The hastily-written code isn’
 
 - [codesys-transfer.py](https://github.com/digitalbond/Basecamp/blob/master/codesys-transfer.py)
 
-## GE D20 RTU
+##GE D20 RTU
 ### Background
 The General Electric D20ME is a widely used in the electric sector, particularly in substations. It is an ancient device with a CPU chip from 1987, actually a similar chip that was in the Macintosh II line, and a PSOS operating system that was end of support in 1999. It even had an old fashioned UV EPROM. All this obsolete technology cost $15,000 for an entry level version with just a couple of cards. The good news is that GE has come out with a new, modern version of the D20 called the D20MX. 
 
@@ -118,7 +122,7 @@ This is the same capability provided in the d20tftpbd Metasploit module.
 
 [ged20telnet-fp.py](https://github.com/digitalbond/Basecamp/blob/master/ged20telnet-fp.py) – This is a generic telnet service fingerprinting tool, which may be used against any controller which supports the telnet protocol.  It actively tries all telnet options against the remote host, to determine what options are supported.  This may crash some controllers, so use it with care.
 
-## Koyo / DirectLOGIC
+##Koyo / DirectLOGIC
 ### Background
 The Koyo / DirectLOGIC product line is a much lower cost PLC as compared to the GE, Rockwell Automation and Schneider Quantum products in Project Basecamp. It is less likely to be seen in the critical infrastructure SCADA and DCS, but it is widely used in smaller plants and systems in a variety of industry sectors
 
@@ -134,7 +138,7 @@ With the recovered password an attacker can download ladder logic to learn about
 ### Fingerprinting Tools
 The Koyo is difficult to fingerprint due to its limited services. The web server provides no fingerprintable data (no Server: identifier). The Modbus protocol supports no odd function codes. The device may be located on active search engines such as ERIPP by searching for information contained in its web pages.
 
-## Rockwell Automation ControlLogix
+##Rockwell Automation ControlLogix
 ### Background
 The Rockwell Automation / Allen-Bradley ControlLogix is a full featured PLC used in a variety of different industry sectors. It is most common in the manufacturing sector, but it is also used in many other industries for ad hoc processes. For example in power plants it is used not in the main DCS but is often seen in balance of plant systems.
 
@@ -157,7 +161,7 @@ The two other payloads are due to protocol stack errors in the ControlLogix. Thi
 - Crash the PLC CPU
 - Crash the Ethernet Controller
 
-## Schneider Electric Modicon PLCs
+##Schneider Electric Modicon
 ### Background
 The Schneider Electric Modicon Quantum is a versatile PLC used in a wide variety of sectors including manufacturing, water/wastewater, oil and gas, chemical and more. It has a modular architecture so the size and cost can vary a great deal. The very basic Quantum pictured at the left cost $11,000 including the Unity software.
 
