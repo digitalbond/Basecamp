@@ -5,6 +5,9 @@ Project Basecamp is a research effort by Digital Bond and a team of volunteer re
 
 The goal of Project Basecamp is to make the risk of these fragile and insecure devices so apparent and easy to demonstrate that a decade of inaction will end. SCADA and DCS owner/operators will demand a secure and robust PLC, and this will drive vendors to finally provide a product worthy of being deployed in the critical infrastructure.
 
+The PLC / RTU that are part of this project are:
+- [3S CoDeSys](http://github.com/digitalbond/Basecamp#3S)
+
 ## The Reason: A Firesheep Moment for PLC's
 
 Everyone knows PLC's are vulnerable --- or so we have heard for ten years now since the 9/11 attacks focused attention on DCS and SCADA security. Not only do they lack basic security features, they are also fragile. Warnings abound about the dangers of even running a port scan on a PLC. Yet even though "everyone knows" there has been little or no progress on developing even the option of purchasing a secure and robust PLC.
@@ -28,8 +31,6 @@ Reid Wightman of Digital Bond leads the Basecamp team. He performed the work on 
 - Ruben Santamarta
 - Anonymous 1
 - Anonymous 2
-
-## The Results
 
 ## 3S CoDeSys
 
